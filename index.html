@@ -7,26 +7,139 @@
     <title>React with Babel</title>
 </head>
 <body>
-    <div id="root"></div>
+<div id="root"></div>
 </body>
 <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script type="text/babel">
     const rootElement = document.getElementById("root");
-    const Container = () => {
-        const [counter, setCounter] = React.useState(0);
-        const onClick = () => {
-            // setCounter(counter + 1);
-            setCounter((current) => (current + 1));
+    function NumberUpDown() {
+        const [number, setNumber] = React.useState(0);
+        const onChangeUp = () => {
+            setNumber((current) => current + 1);
+        }
+        const onChangeDown = () => {
+            setNumber((current) => current - 1);
+        }
+        return(
+            <div>
+                <h1>숫자 변화시키겠습니다.</h1>
+                <h4>현재 숫자 : {number}</h4>
+                <button onClick={onChangeUp}>증가 버튼</button>
+                <button onClick={onChangeDown}>감소 버튼</button>
+            </div>
+
+        )
+    }
+    function MinutesHours() {
+        const [amount, setAmount] = React.useState(0);
+        const [flipped, setFlipped] = React.useState(false);
+        const onChange = (event) => {
+            setAmount(event.target.value);
         };
+        const reset = () => {
+            setAmount(0);
+        }
+        const onFlip = () => {
+            setFlipped((current) => !current);
+            reset();
+        }
         return (
             <div>
-                <h3>클릭 수 : {counter}</h3>
-                <button onClick={onClick}>증가 버튼</button>
+                <h1 className="hi">시간 변환하겠습니다.</h1>
+                <div>
+                    <label htmlFor="minutes">   Minutes : </label>
+                    <input
+                        id="minutes"
+                        value={flipped ? amount * 60 : amount}
+                        onChange={onChange}
+                        placeholder="Minutes"
+                        type="number"
+                        disabled={flipped}
+                    />
+                </div>
+                <div>
+                    <label>Hours : </label>
+                    <input
+                        onChange={onChange}
+                        value={flipped ? amount : Math.round(amount / 60)}
+                        placeholder="Hours"
+                        type="number"
+                        disabled={!flipped}
+                    />
+                </div>
+                <div>
+                    <button onClick={reset}>리셋</button>
+                    <button onClick={onFlip}>{flipped ? "분 계산" : "시간 계산"}</button>
+                </div>
             </div>
-        );
-    };
+        )
+    }
+    function KmMiles() {
+        const [distance, setDistance] = React.useState(0);
+        const [flip, setFilp] = React.useState(false);
+        const onChangeDistance = (event) =>{
+            setDistance(event.target.value);
+        }
+        const reset = () =>{
+            setDistance(0);
+        }
+        const onChangeFilp = () =>{
+            setFilp((current) => !current);
+            reset();
+        }
+        return(
+            <div>
+                <div>
+                    <h1>거리 계산하겠습니다.</h1>
+                    <label>KM : </label>
+                    <input
+                        placeholder="km를 입력하세요"
+                        type="number"
+                        value={flip ? distance * 1.609 : distance}
+                        onChange={onChangeDistance}
+                        disabled={flip}
+                    />
+                </div>
+                <div>
+                    <label>Miles</label>
+                    <input
+                        placeholder="miles를 입력하세요"
+                        type="number"
+                        value={flip ? distance : distance / 1.609}
+                        onChange={onChangeDistance}
+                        disabled={!flip}
+                    />
+                </div>
+                <button onClick={reset}>리셋</button>
+                <button onClick={onChangeFilp}>{flip ? "km 계산" : "miles 계산"}</button>
+            </div>
+        )
+
+    }
+    function Container() {
+        const [index, setIndex] = React.useState("-1");
+        const onChangeIndex = (event) => {
+            setIndex(event.target.value);
+        }
+        return(
+            <div>
+                <h1>리액트를 알아보자</h1>
+                <select value={index} onChange={onChangeIndex}>
+                    <option value="-1">어떤걸 할까요????</option>
+                    <option value="0">숫자 업 다운</option>
+                    <option value="1">시간 계산</option>
+                    <option value="2">거리 계산</option>
+                </select>
+                <hr/>
+                {index === "0" ? <NumberUpDown/> : null}
+                {index === "1" ? <MinutesHours/> : null}
+                {index === "2" ? <KmMiles/> : null}
+            </div>
+        )
+    }
+
     ReactDOM.createRoot(rootElement).render(<Container/>);
 </script>
 </html>

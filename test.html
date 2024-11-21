@@ -14,19 +14,23 @@
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script type="text/babel">
     const rootElement = document.getElementById("root");
-    const Container = () =>{
-        const [counter, setCounter] = React.useState(0);
-        const onClickUp = () =>{
-            setCounter(counter + 1);
-        };
-        const onClickDown = () =>{
-            setCounter(counter - 1);
-        };
-        return (
+    function Btn({text}) {
+        return <button style={{
+            backgroundColor: "tomato",
+            color: "whitesmoke",
+            padding: "10px 20px",
+            border: 10,
+            borderRadius: 10,
+        }}>{text}
+        </button>
+    }
+    function Container() {
+        return(
             <div>
-                <h3>클릭 수: {counter}</h3>
-                <button onClick={onClickUp}>Click me!</button>
-                <button onClick={onClickDown}>Click me!</button>
+                <div>
+                <Btn text="저장 버튼"></Btn>
+                <Btn text="확인 버튼"></Btn>
+                </div>
             </div>
         )
     }
