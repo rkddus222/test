@@ -14,9 +14,11 @@
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script type="text/babel">
     const rootElement = document.getElementById("root");
-    function Btn({text}) {
-        return <button style={{
-            backgroundColor: "tomato",
+    function Btn({text, onClick, color}) {
+        return <button
+            onClick={onClick}
+            style={{
+            backgroundColor: color ? "tomato" : "blue",
             color: "whitesmoke",
             padding: "10px 20px",
             border: 10,
@@ -25,11 +27,19 @@
         </button>
     }
     function Container() {
+        const [save, setSave] = React.useState("저장 버튼");
+        const [confirm, setConfirm] = React.useState("확인 버튼");
+        const onClickText = () => {
+            setSave("저장되었습니다.");
+        }
+        const onConfirmText = () => {
+            setConfirm("확인되었습니다.");
+        }
         return(
             <div>
                 <div>
-                <Btn text="저장 버튼"></Btn>
-                <Btn text="확인 버튼"></Btn>
+                <Btn text={save} onClick={onClickText} color={false}></Btn>
+                <Btn text={confirm} onClick={onConfirmText} color={true}></Btn>
                 </div>
             </div>
         )

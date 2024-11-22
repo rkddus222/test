@@ -118,24 +118,50 @@
         )
 
     }
+    function Btn({text, color, onClick}) {
+        return <button
+            onClick={onClick}
+            style={{
+                backgroundColor: color ? "blue" : "tomato",
+                color: "whitesmoke",
+                padding: "10px 20px",
+                border: 10,
+                borderRadius: 10,
+                margin: "5px 5px"
+        }}> {text}
+        </button>
+    }
     function Container() {
         const [index, setIndex] = React.useState("-1");
         const onChangeIndex = (event) => {
             setIndex(event.target.value);
         }
+        const [save, setSave] = React.useState("저장 버튼");
+        const onClickSave = () => {
+            setSave("저장되었습니다.")
+        }
+        const [confirm, setConfirm] = React.useState("확인 버튼");
+        const onClickConfirm = () => {
+            setConfirm("확인되었습니다.")
+        }
         return(
             <div>
-                <h1>리액트를 알아보자</h1>
-                <select value={index} onChange={onChangeIndex}>
-                    <option value="-1">어떤걸 할까요????</option>
-                    <option value="0">숫자 업 다운</option>
-                    <option value="1">시간 계산</option>
-                    <option value="2">거리 계산</option>
-                </select>
-                <hr/>
-                {index === "0" ? <NumberUpDown/> : null}
-                {index === "1" ? <MinutesHours/> : null}
-                {index === "2" ? <KmMiles/> : null}
+                <div>
+                    <h1>리액트를 알아보자</h1>
+                    <select value={index} onChange={onChangeIndex}>
+                        <option value="-1">어떤걸 할까요????</option>
+                        <option value="0">숫자 업 다운</option>
+                        <option value="1">시간 계산</option>
+                        <option value="2">거리 계산</option>
+                    </select>
+                    <hr/>
+                    {index === "0" ? <NumberUpDown/> : null}
+                    {index === "1" ? <MinutesHours/> : null}
+                    {index === "2" ? <KmMiles/> : null}
+                </div>
+                <br/>
+                <Btn text={save} color={false} onClick={onClickSave}></Btn>
+                <Btn text={confirm} color={true} onClick={onClickConfirm}></Btn>
             </div>
         )
     }
